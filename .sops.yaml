@@ -1,0 +1,4 @@
+creation_rules:
+  - path_regex: \.enc\.yaml
+    azure_keyvault: https://centralservices-vault.vault.azure.net/keys/pdreker-sops/3314b69916984f24990b0d6c4e70891f
+    encrypted_suffix: Template
