@@ -1,39 +1,56 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: personio-sync-backup
+  name: {{ include "backup-pvc.fullname" . }}
+  labels:
+    {{- include "backup-pvc.labels" . | nindent 4 }}
 spec:
-  schedule: "0 5,11,17,23 * * *"
+  schedule: {{ required "schedule must be specified" .Values.schedule }}
   jobTemplate:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "backup-pvc.selectorLabels" . | nindent 8 }}
     spec:
       template:
         spec:
+          {{- with .Values.imagePullSecrets }}
           imagePullSecrets:
-          - name: personio-sync-pullsecret
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          serviceAccountName: {{ include "backup-pvc.serviceAccountName" . }}
+          securityContext:
+            {{- toYaml .Values.podSecurityContext | nindent 12 }}
           containers:
-          - name: personio-sync-backup
-            image: docker.pkg.github.com/codecampn/k8s-backup/k8s-backup:v0.2.2
+          - name: {{ .Chart.Name }}
+            securityContext:
+              {{- toYaml .Values.securityContext | nindent 14 }}
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
             env:
             - name: AZURE_STORAGE_ACCOUNT_NAME
               valueFrom:
                 secretKeyRef:
-                  name: personio-backup-creds
-                  key: azureStorageAccount
+                  name: {{ required "azureSecretName must be specified" .Values.azureSecretName }}
+                  key: {{ .Values.azureSecretAccountKey }}
             - name: AZURE_STORAGE_ACCOUNT_KEY
               valueFrom:
                 secretKeyRef:
-                  name: personio-backup-creds
-                  key: azureStorageAccountKey
+                  name: {{ .Values.azureSecretName }}
+                  key: {{ .Values.azureSecretKeyKey }}
             - name: BACKUP_KEY
               valueFrom:
                 secretKeyRef:
-                  name: personio-backup-creds
-                  key: dataKey
+                  name: {{ .Values.encryptionsSecretName | default .Values.azureSecretName }}
+                  key: {{ .Values.encryptionSecretKey }}
             volumeMounts:
             - name: personio-sync-persistence
-              mountPath: /bupsrc
+              mountPath: /backup-src
           restartPolicy: OnFailure
           volumes:
           - name: personio-sync-persistence
             persistentVolumeClaim:
-              claimName: personio-sync-persistence
+              claimName: {{ required "PVC name must be specified." .Values.backupSourcePVC }}
