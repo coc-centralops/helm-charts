@@ -1,9 +1,0 @@
-apiVersion: v2
-name: backup-k8s-postgres
-description: Deploys a CronJob which backups postgresql to Azure (Blob)
-version: 0.1.0
-appVersion: 0.1.0
-type: application
-maintainers:
-  - name: Patrick Dreker
-    email: patrick.dreker@codecamp-n.com
