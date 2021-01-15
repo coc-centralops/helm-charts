@@ -1,2 +1,5 @@
 # helm-charts
-Central Helm chart repository
+
+CAUTION: Public repository!
+
+Central public Helm chart repository of CodeCamp:N
