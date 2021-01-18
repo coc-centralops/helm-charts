@@ -22,6 +22,7 @@ spec:
           imagePullSecrets:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          serviceAccountName: {{ include "backup-k8s-postgres.serviceAccountName" . }}
           containers:
             - name: {{ .Chart.Name }}
               securityContext:
