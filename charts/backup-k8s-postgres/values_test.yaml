@@ -4,12 +4,12 @@
 
 config:
   prefix: test123
-  storageAccount: "myStorageAccount"
-  postgresDatabase: "myPgDatabase"
-  postgresHost: "myPgHost"
-  postgresPort: 5432
-  postgresUser: myPgUser
-  postgresPasswordSecret: "myPgPasswordSecret"
-  postgresPasswordSecretKey: "myPgPasswordSecretKey"
-  storageAccountKeySecret: "myStorageAccountSecret"
-  storageAccountKeySecretKey: "myStorageAccountSecretKey"
+  storageAccount: "mystorageaccount"
+  postgresDatabase: "mypgdatabase"
+  postgresHost: "mypgHost"
+  postgresPort: "5432"
+  postgresUser: mypguser
+  postgresPasswordSecret: "mypgpasswordsecret"
+  postgresPasswordSecretKey: "mypgpasswordsecretkey"
+  storageAccountKeySecret: "mystorageaccountsecret"
+  storageAccountKeySecretKey: "mystorageaccountsecretkey"
