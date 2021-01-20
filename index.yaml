@@ -2,6 +2,19 @@ apiVersion: v1
 entries:
   backup-k8s-postgres:
   - apiVersion: v2
+    appVersion: v0.1.2
+    created: "2021-01-20T16:01:57.413938798Z"
+    description: Deploys a CronJob which backups postgresql to Azure (Blob)
+    digest: 1515010ee9b8624c9186f4c5c7cbda26f339184b6c1ee181046ddfcbdbb89d64
+    maintainers:
+    - email: patrick.dreker@codecamp-n.com
+      name: Patrick Dreker
+    name: backup-k8s-postgres
+    type: application
+    urls:
+    - https://github.com/codecampn/helm-charts/releases/download/backup-k8s-postgres-0.1.7/backup-k8s-postgres-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v2
     appVersion: v0.1.1
     created: "2021-01-20T15:36:50.927604166Z"
     description: Deploys a CronJob which backups postgresql to Azure (Blob)
