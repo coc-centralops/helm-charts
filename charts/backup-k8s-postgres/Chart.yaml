@@ -2,7 +2,7 @@ apiVersion: v2
 name: backup-k8s-postgres
 description: Deploys a CronJob which backups postgresql to Azure (Blob)
 version: 0.1.5
-appVersion: 0.1.1
+appVersion: v0.1.1
 type: application
 maintainers:
   - name: Patrick Dreker
