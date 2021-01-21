@@ -1,9 +1,9 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: {{ include "backup-pvc.fullname" . }}
+  name: {{ include "backup-k8s-pvc.fullname" . }}
   labels:
-    {{- include "backup-pvc.labels" . | nindent 4 }}
+    {{- include "backup-k8s-pvc.labels" . | nindent 4 }}
 spec:
   schedule: {{ required "schedule must be specified" .Values.schedule }}
   jobTemplate:
@@ -13,7 +13,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "backup-pvc.selectorLabels" . | nindent 8 }}
+        {{- include "backup-k8s-pvc.selectorLabels" . | nindent 8 }}
     spec:
       template:
         spec:
@@ -21,7 +21,7 @@ spec:
           imagePullSecrets:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          serviceAccountName: {{ include "backup-pvc.serviceAccountName" . }}
+          serviceAccountName: {{ include "backup-k8s-pvc.serviceAccountName" . }}
           securityContext:
             {{- toYaml .Values.podSecurityContext | nindent 12 }}
           containers:
@@ -41,16 +41,20 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.azureSecretName }}
                   key: {{ .Values.azureSecretKeyKey }}
+            - name: AZURE_BLOB_CONTAINER
+              value: {{ .Values.azureContainerName }}
+            - name: BACKUP_FILE_PREFIX
+              value: {{ .Values.backupFilePrefix }}
             - name: BACKUP_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.encryptionsSecretName | default .Values.azureSecretName }}
+                  name: {{ .Values.encryptionSecretName | default .Values.azureSecretName }}
                   key: {{ .Values.encryptionSecretKey }}
             volumeMounts:
-            - name: personio-sync-persistence
+            - name: backup-src-pvc
               mountPath: /backup-src
           restartPolicy: OnFailure
           volumes:
-          - name: personio-sync-persistence
+          - name: backup-src-pvc
             persistentVolumeClaim:
               claimName: {{ required "PVC name must be specified." .Values.backupSourcePVC }}
