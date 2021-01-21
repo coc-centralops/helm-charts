@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "backup-pvc.name" -}}
+{{- define "backup-k8s-pvc.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -11,7 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "backup-pvc.fullname" -}}
+{{- define "backup-k8s-pvc.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -27,16 +27,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "backup-pvc.chart" -}}
+{{- define "backup-k8s-pvc.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "backup-pvc.labels" -}}
-helm.sh/chart: {{ include "backup-pvc.chart" . }}
-{{ include "backup-pvc.selectorLabels" . }}
+{{- define "backup-k8s-pvc.labels" -}}
+helm.sh/chart: {{ include "backup-k8s-pvc.chart" . }}
+{{ include "backup-k8s-pvc.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -46,17 +46,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "backup-pvc.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "backup-pvc.name" . }}
+{{- define "backup-k8s-pvc.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "backup-k8s-pvc.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "backup-pvc.serviceAccountName" -}}
+{{- define "backup-k8s-pvc.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "backup-pvc.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "backup-k8s-pvc.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

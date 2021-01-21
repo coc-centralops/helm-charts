@@ -1,7 +1,8 @@
 apiVersion: v2
-name: k8s-backup-pvc
+name: backup-k8s-pvc
 description: Deploys a CronJob which backups PVC persistent data to Azure (Blob)
 version: 0.1.0
+appVersion: v0.1.0
 type: application
 maintainers:
   - name: Patrick Dreker
