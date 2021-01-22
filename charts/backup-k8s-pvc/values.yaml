@@ -47,7 +47,7 @@ resources: {}
   #   memory: 128Mi
 
 # Schedule to run the CronJob. See https://en.wikipedia.org/wiki/Cron for more info.
-schedule: ""
+schedule: "0 1,7 * * *"
 
 # Name of the Secret containing the Azure Credentials for the destination blob
 # The corresponding *Key* entries may be used to specify the key names inside the secret
@@ -60,7 +60,7 @@ encryptionSecretName: ""
 encryptionSecretKey: encryptionKey
 
 # Name of the PVC to backup
-backupSourcePVC: ""
+backupSourcePVC: "examplePVC"
 
 azureContainerName: ""
 backupFilePrefix: "pvc"
