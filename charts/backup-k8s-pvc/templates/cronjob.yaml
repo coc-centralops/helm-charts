@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "backup-k8s-pvc.labels" . | nindent 4 }}
 spec:
-  schedule: {{ .Values.schedule }}
+  schedule: {{ .Values.schedule | default "0 1,13 * * *" }}
   jobTemplate:
     metadata:
       {{- with .Values.podAnnotations }}
