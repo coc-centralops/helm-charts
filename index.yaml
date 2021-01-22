@@ -107,6 +107,19 @@ entries:
     version: 0.1.1
   backup-k8s-pvc:
   - apiVersion: v2
+    appVersion: v1.0.4
+    created: "2021-01-22T16:36:03.994129067Z"
+    description: Deploys a CronJob which backups PVC persistent data to Azure (Blob)
+    digest: 5f34748cec251157b0103ff47341b19a18c53160c64e2475cecb83d8d0cb66cf
+    maintainers:
+    - email: patrick.dreker@codecamp-n.com
+      name: Patrick Dreker
+    name: backup-k8s-pvc
+    type: application
+    urls:
+    - https://github.com/codecampn/helm-charts/releases/download/backup-k8s-pvc-1.0.4/backup-k8s-pvc-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v2
     appVersion: v1.0.3
     created: "2021-01-22T16:24:12.870109573Z"
     description: Deploys a CronJob which backups PVC persistent data to Azure (Blob)
