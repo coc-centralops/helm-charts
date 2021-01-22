@@ -49,7 +49,7 @@ spec:
             - name: backup-src-pvc
               mountPath: /backup-src
             - name: backup-key
-              mountPath: /backup-temp
+              mountPath: /backup-key
               readOnly: true
           restartPolicy: OnFailure
           volumes:
