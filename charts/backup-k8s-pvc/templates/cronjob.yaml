@@ -45,16 +45,21 @@ spec:
               value: {{ .Values.azureContainerName }}
             - name: BACKUP_FILE_PREFIX
               value: {{ .Values.backupFilePrefix }}
-            - name: BACKUP_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.encryptionSecretName | default .Values.azureSecretName }}
-                  key: {{ .Values.encryptionSecretKey }}
             volumeMounts:
             - name: backup-src-pvc
               mountPath: /backup-src
+            - name: backup-key
+              mountPath: /backup-temp
+              readOnly: true
           restartPolicy: OnFailure
           volumes:
           - name: backup-src-pvc
             persistentVolumeClaim:
               claimName: {{ .Values.backupSourcePVC }}
+          - name: backup-key
+            secret:
+              secretName: {{ .Values.encryptionSecretName | default .Values.azureSecretName }}
+              items:
+                - key: {{ .Values.encryptionSecretKey }}
+                  path: key
+
