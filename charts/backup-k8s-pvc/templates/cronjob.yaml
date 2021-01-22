@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "backup-k8s-pvc.labels" . | nindent 4 }}
 spec:
-  schedule: {{ required "schedule must be specified" .Values.schedule }}
+  schedule: {{ .Values.schedule }}
   jobTemplate:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -34,7 +34,7 @@ spec:
             - name: AZURE_STORAGE_ACCOUNT_NAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ required "azureSecretName must be specified" .Values.azureSecretName }}
+                  name: {{ .Values.azureSecretName }}
                   key: {{ .Values.azureSecretAccountKey }}
             - name: AZURE_STORAGE_ACCOUNT_KEY
               valueFrom:
@@ -57,4 +57,4 @@ spec:
           volumes:
           - name: backup-src-pvc
             persistentVolumeClaim:
-              claimName: {{ required "PVC name must be specified." .Values.backupSourcePVC }}
+              claimName: {{ .Values.backupSourcePVC }}
