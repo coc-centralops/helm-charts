@@ -32,6 +32,8 @@ spec:
               resources:
                 {{- toYaml .Values.resources | nindent 16 }}
               env:
+                - name: AZURE_BLOB_CONTAINER
+                  value: {{ .Values.config.storageContainer }}
                 - name: BACKUP_PREFIX
                   value: {{ .Values.config.prefix }}
                 - name: AZURE_STORAGE_ACCOUNT_NAME
@@ -54,6 +56,8 @@ spec:
                     secretKeyRef:
                       name: {{ .Values.config.postgresPasswordSecret }}
                       key: {{ .Values.config.postgresPasswordSecretKey }}
+                - name: PUSHGW_ENABLED
+                  value: {{ .Values.config.pushgwEnabled | quote }}
           serviceAccountName: {{ include "backup-k8s-postgres.serviceAccountName" . }}
           securityContext:
             {{- toYaml .Values.podSecurityContext | nindent 12 }}
