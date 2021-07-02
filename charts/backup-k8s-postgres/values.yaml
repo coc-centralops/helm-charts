@@ -13,7 +13,9 @@ config:
   postgresPasswordSecretKey: ""
   storageAccountKeySecret: ""
   storageAccountKeySecretKey: ""
+  storageContainer: ""
   schedule: "0 */12 * * *"
+  pushgwEnabled: ""
 
 image:
   repository: docker.pkg.github.com/codecampn/backup-k8s-postgres/backup-k8s-postgres
